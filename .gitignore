@@ -1,3 +1,6 @@
+install.packages("tidyverse")
+install.packages("descr")
+BD_Alunos <- read_excel("/media/p1ntsu/B2BEB090BEB04E9B/Users/Lucas/Desktop/BD_Alunos.xlsx")
 #declarando os vetores da amostra estratificada
 eng <- BD_Alunos[BD_Alunos$Curso=="Engenharia",]
 engLic <- BD_Alunos[BD_Alunos$Curso=="Licenciatura em Computação",]
@@ -15,3 +18,4 @@ EMete <- sample(nrow(mete),lenMete)
 
 #Unir os vetores
 vet <- rbind(EEng,ELic,EMete)
+
