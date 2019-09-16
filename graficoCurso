@@ -1,0 +1,23 @@
+install.packages("tidyverse")
+install.packages("descr")
+BD_Alunos <- read_excel("/media/p1ntsu/B2BEB090BEB04E9B/Users/Lucas/Desktop/BD_Alunos.xlsx")
+#declarando os vetores da amostra estratificada
+eng <- BD_Alunos[BD_Alunos$Curso=="Engenharia",]
+engLic <- BD_Alunos[BD_Alunos$Curso=="Licenciatura em Computação",]
+mete <- BD_Alunos[BD_Alunos$Curso=="Meteorologia",]
+
+#tamanho dos vetores estratificados
+lenEng <- round((80/294)*(length(eng$Registros)),digits = 0)
+lenLic <- round((80/294)*(length(engLic$Registros)),digits = 0)
+lenMete <- round((80/294)*(length(mete$Registros)),digits = 0)
+
+#amostra estratificada
+EEng <- eng[sample(nrow(eng),lenEng),]
+ELic <- engLic[sample(nrow(engLic),lenLic),]
+EMete <- mete[sample(nrow(mete),lenMete),]
+
+#Unir os dataFrames
+vet <- rbind(EEng,ELic,EMete)
+#grafico da amostra
+quant <- c(lenEng,lenLic,lenMete)
+barplot(quant,names.arg =c("Engenharia","Lic. em Computação","Meteorologia"))
