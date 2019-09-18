@@ -5,7 +5,7 @@ library(descr)
 library(tidyverse)
 
 #leitura dos dados do excell
-BD_Alunos <- read_excel("Área de Trabalho/BD_Alunos.xlsx")
+BD_Alunos <- read_excel("~/Área de Trabalho/BD_Alunos.xlsx")
 
 #declarando os vetores da amostra estratificada
 eng <- BD_Alunos[BD_Alunos$Curso=="Engenharia",]
@@ -34,16 +34,25 @@ barplot(quant,names.arg = c("Engenharia","Lic. em Computação","Meteorologia"),
 tabelaCurso <- data.frame("Nome"=nome,"Frequências"=frequencias,"Percentagem"=porcentagem )
 
 
-  #grafico ensinoMedio
+#grafico ensinoMedio e tabela
 militar <-length(vet[vet$Cursou_EnsinoMedio == "Escola Militar",]$Registros)
 particular <-length(vet[vet$Cursou_EnsinoMedio == "Escola Particular",]$Registros)
 publica <- length(vet[vet$Cursou_EnsinoMedio == "Escola Pública Normal",]$Registros)
 tecnica <- length(vet[vet$Cursou_EnsinoMedio == "Escola Técnica",]$Registros)
+nomeM <- c("Militar","Particular","Pública","Técnica","Total")
+frequenciasM <- c(militar,particular,publica,tecnica,(80))
+porcentagemM <- c(((militar*100)/80),((particular*100)/80),((publica*100)/80),((tecnica*100)/80),(100))
 barplot(c(militar,particular,publica,tecnica),names.arg = c("Militar","Particular","Pública Normal","Técnica"),main = "Local onde foi feito o Ensino Médio 2017",xlab = "Escola")
+tabelaMedio <- data.frame("Nome"=nomeM,"Frequências"=frequenciasM,"Percentagem"=porcentagemM )
+view(tabelaMedio)
 
-#grafico genero
+#grafico genero e tabela
 homem <-length(vet[vet$Genero == "Masculino",]$Registros)
 mulher <-length(vet[vet$Genero == "Feminino",]$Registros)
+nomeG <- c("Homem","Mulher","Total")
+frequenciasG <- c(homem,mulher,(80))
+porcentagemG <- c(((homem*100)/80),((mulher*100)/80),(100))
+tabelaGenero <- data.frame("Nome"=nomeG,"Frequências"=frequenciasG,"Percentagem"=porcentagemG )
 barplot(c(homem,mulher),names.arg = c("Masculino","Feminino"),main = "Gênero dos estudantes 2017",xlab = "Gênero")
 #----boxplot(vet$Idade~vet$Genero)-----Opção 2 de gráfico
 #---->pie(table(vet$Genero),main = "Gênero dos estudantes 2017")<----Opção 3 de grafico
