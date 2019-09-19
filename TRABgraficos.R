@@ -5,7 +5,7 @@ library(descr)
 library(tidyverse)
 
 #leitura dos dados do excell
-BD_Alunos <- read_excel("~/Área de Trabalho/BD_Alunos.xlsx")
+BD_Alunos <- read_excel("BD_Alunos.xlsx")
 
 #declarando os vetores da amostra estratificada
 eng <- BD_Alunos[BD_Alunos$Curso=="Engenharia",]
@@ -32,7 +32,6 @@ frequencias <- c(lenEng,lenLic,lenMete,(80))
 porcentagem <- c(((lenEng*100)/80),((lenLic*100)/80),((lenMete*100)/80),(100))
 tabelaCurso <- data.frame("Curso"=nome,"Frequências"=frequencias,"Percentagem"=porcentagem )
 barplot(quant,names.arg = c("Engenharia","Lic. em Computação","Meteorologia"),main = "Quantidade de alunos por curso 2017",xlab = "Curso")
-
 
 
 #grafico ensinoMedio e tabela
