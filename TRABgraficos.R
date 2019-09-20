@@ -71,6 +71,7 @@ porcentagemSN <- c(((sim*100)/80),((nao*100)/80),(100))
 tabelaSimNao <- data.frame("Resposta"=nomeSN,"Frequências"=frequenciasSN,"Percentagem"=porcentagemSN )
 barplot(c(sim,nao),names.arg = c("Trabalham","Não Trabalham"),main = "Estudantes que trabalham 2017",xlab = "Respostas",ylab='fi')
 
+
 #grafico HoraDeEstudo e tabela----
 amp = max(as.numeric(vet$Horas_EstudoSemana)) - min(as.numeric(vet$Horas_EstudoSemana))
 k = round(sqrt(80))
@@ -81,13 +82,12 @@ tabelaHoras <- data.frame(freq(cut(as.numeric(vet$Horas_EstudoSemana),breaks = i
 hist(as.numeric(vet$Horas_EstudoSemana),main = "Gráfico  - Histrograma da Horas de Estudo", freq=T, breaks = k ,xlab = "Horas", col = "grey",ylab="fi")
 
 
-
 #grafico conhecimento matematico e tabela----
 ampM = max(as.numeric(vet$Conhecimento_Matematica)) - min(as.numeric(vet$Conhecimento_Matematica))
 kM = round(sqrt(80))
 hM = round(amp/kM)
-intervalosM <-seq(from=min(as.numeric(vet$Conhecimento_Matematica)),to=max(as.numeric(vet$Conhecimento_Matematica)),by=hM)
+intervalosM <- seq(from=min(as.numeric(vet$Conhecimento_Matematica)),to=max(as.numeric(vet$Conhecimento_Matematica)),by=hM)
 
-tabelaConhecimento <- data.frame(freq(cut(as.numeric(vet$Conhecimento_Matematica),breaks = 2,right = T)))
+tabelaConhecimento <- data.frame(freq(cut(vet$Conhecimento_Matematica,breaks = 2,right = F)))
 hist(as.numeric(vet$Conhecimento_Matematica),main = "Gráfico  - Histrograma de conhecimento matemático", freq=T, breaks = kM ,xlab = "Nível", col = "grey",ylab="fi")
-#-
+#----
