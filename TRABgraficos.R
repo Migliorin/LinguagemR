@@ -5,7 +5,7 @@ library(descr)
 library(tidyverse)
 
 #leitura dos dados do excell
-BD_Alunos <- read_excel("Documentos/LinguagemR/BD_Alunos.xlsx")
+BD_Alunos <- read_excel("BD_Alunos.xlsx")
 
 #declarando os vetores da amostra estratificada
 eng <- BD_Alunos[BD_Alunos$Curso=="Engenharia",]
@@ -25,7 +25,7 @@ EMete <- mete[sample(nrow(mete),lenMete),]
 #Unir os dataFrames estratificados
 vet <- bind_rows(EEng,ELic,EMete)
 
-#grafico do curso e tabela
+#grafico do curso e tabela----
 quant <- c(lenEng,lenLic,lenMete)
 nome <- c("Engenharia","Lic. em Computação","Meteorologia","Total")
 frequencias <- c(lenEng,lenLic,lenMete,(80))
@@ -35,7 +35,7 @@ tabelaCurso <- data.frame("Curso"=nome,"Frequências"=frequencias,"Percentagem"=
 barplot(quant,names.arg = c("Engenharia","Lic. em Computação","Meteorologia"),main = "Gráfico - Quantidade de alunos por curso 2017",xlab = "Curso",ylab='fi')
 
 
-#grafico ensinoMedio e tabela
+#grafico ensinoMedio e tabela----
 militar <-length(vet[vet$Cursou_EnsinoMedio == "Escola Militar",]$Registros)
 particular <-length(vet[vet$Cursou_EnsinoMedio == "Escola Particular",]$Registros)
 publica <- length(vet[vet$Cursou_EnsinoMedio == "Escola Pública Normal",]$Registros)
@@ -48,7 +48,7 @@ tabelaMedio <- data.frame("Escola"=nomeM,"Frequências"=frequenciasM,"Percentage
 barplot(c(militar,particular,publica,tecnica),names.arg = c("Militar","Particular","Pública Normal","Técnica"),main = "Gráfico - Ensino Médio 2017",xlab = "Escola",ylab='fi')
 
 
-#grafico genero e tabela
+#grafico genero e tabela----
 homem <-length(vet[vet$Genero == "Masculino",]$Registros)
 mulher <-length(vet[vet$Genero == "Feminino",]$Registros)
 nomeG <- c("Homem","Mulher","Total")
@@ -61,7 +61,7 @@ barplot(c(homem,mulher),names.arg = c("Masculino","Feminino"),main = "Gráfico -
 #---->pie(table(vet$Genero),main = "Gênero dos estudantes 2017")<----Opção 3 de grafico
 
 
-#grafico trabalhaSimOuNao e tabela
+#grafico trabalhaSimOuNao e tabela----
 sim <-length(vet[vet$Trabalha == "Sim",]$Registros)
 nao <-length(vet[vet$Trabalha == "Não",]$Registros)
 nomeSN <- c("Homem","Mulher","Total")
@@ -71,7 +71,7 @@ porcentagemSN <- c(((sim*100)/80),((nao*100)/80),(100))
 tabelaSimNao <- data.frame("Resposta"=nomeSN,"Frequências"=frequenciasSN,"Percentagem"=porcentagemSN )
 barplot(c(sim,nao),names.arg = c("Trabalham","Não Trabalham"),main = "Estudantes que trabalham 2017",xlab = "Respostas",ylab='fi')
 
-#grafico HoraDeEstudo e tabela
+#grafico HoraDeEstudo e tabela----
 amp = max(as.numeric(vet$Horas_EstudoSemana)) - min(as.numeric(vet$Horas_EstudoSemana))
 k = round(sqrt(80))
 h = round(amp/k)
@@ -81,13 +81,13 @@ tabelaHoras <- data.frame(freq(cut(as.numeric(vet$Horas_EstudoSemana),breaks = i
 hist(as.numeric(vet$Horas_EstudoSemana),main = "Gráfico  - Histrograma da Horas de Estudo", freq=T, breaks = k ,xlab = "Horas", col = "grey",ylab="fi")
 
 
-#grafico conhecimento matematico e tabela
+
+#grafico conhecimento matematico e tabela----
 ampM = max(as.numeric(vet$Conhecimento_Matematica)) - min(as.numeric(vet$Conhecimento_Matematica))
 kM = round(sqrt(80))
 hM = round(amp/kM)
-intervalos <-seq(from=min(as.numeric(vet$Conhecimento_Matematica)),to=max(as.numeric(vet$Conhecimento_Matematica)),by=hM)
+intervalosM <-seq(from=min(as.numeric(vet$Conhecimento_Matematica)),to=max(as.numeric(vet$Conhecimento_Matematica)),by=hM)
 
-tabelaConhecimento <- data.frame(freq(cut(as.numeric(vet$Conhecimento_Matematica),breaks = intervalos,right = T)))
-view(tabelaConhecimento)
+tabelaConhecimento <- data.frame(freq(cut(as.numeric(vet$Conhecimento_Matematica),breaks = 2,right = T)))
 hist(as.numeric(vet$Conhecimento_Matematica),main = "Gráfico  - Histrograma de conhecimento matemático", freq=T, breaks = kM ,xlab = "Nível", col = "grey",ylab="fi")
-
+#-
