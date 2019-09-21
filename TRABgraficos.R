@@ -133,14 +133,36 @@ Coeficientevar_Horas_EstudoSemana <- (sd(Horas_EstudoSemana)/(media_Horas_Estudo
 Coeficiente_Simetria_horas_Estudo_semana <- ((quantile(Horas_EstudoSemana)[1]+quantile(Horas_EstudoSemana)[3]-2*quantile(Horas_EstudoSemana)[2]) / (quantile(Horas_EstudoSemana)[3] - quantile(Horas_EstudoSemana)[1]))
                                                                                                   #pela relação de taylor
 
+
+#-Cálculo de média, Moda, Variancia, DP, CV, CS. Para conhecimento matematico----
+conhecimentoMatematico <- (as.numeric(vet$Conhecimento_Matematica))
+
+medianaCM <- summary(conhecimentoMatematico)[3]
+
+mediaCM <- summary(conhecimentoMatematico)[4]
+
+modaCM <- mean(as.numeric(  names(table(conhecimentoMatematico))[table(conhecimentoMatematico)==max(table(conhecimentoMatematico))]))
+
+varianciaCM <- var(conhecimentoMatematico)
+
+desvioPadraoCM<- sd(conhecimentoMatematico)
+
+coeficientevarCM<- (sd(conhecimentoMatematico)/(conhecimentoMatematico))*100
+
+coeficienteSimetriaCM<- ((quantile(conhecimentoMatematico)[1]+quantile(conhecimentoMatematico)[3]-2*quantile(conhecimentoMatematico)[2]) / (quantile(conhecimentoMatematico)[3] - quantile(conhecimentoMatematico)[1]))
+
+
 #tabela de idade e horas estudos
 variaveisIdade <- as.numeric(c(mediana_Idade,media_Idade,Moda_Idade,Variancia_Idade,DesvioPadrao_Idade,Coeficientevar_Idade,Coeficiente_Simetria_Idade))
 variaveisHoras <- c(mediana_Horas_EstudoSemana,media_Horas_EstudoSemana,moda_horasEstudo_semana,Variancia_Horas_EstudoSemana,DesvioPadrao_Horas_EstudoSemana,Coeficientevar_Horas_EstudoSemana,Coeficiente_Simetria_horas_Estudo_semana)
+variaveiCM <-c(as.numeric(medianaCM,mediaCM,modaCM,varianciaCM,desvioPadraoCM,coeficientevarCM,coeficienteSimetriaCM))
 
 tabelaIdadeVar <- data.frame("Idade"="-","Mediana"=variaveisIdade[1],"Media"=variaveisIdade[2],"Moda"= variaveisIdade[3],"Variância"=variaveisIdade[4],"Desvio padrão"=variaveisIdade[5],"Coeficiente de variância"=variaveisIdade[6],"Coeficiente de simetria"=variaveisIdade[7])
 tabelaHoraVar <- data.frame("Horas"="-","Mediana"=variaveisHoras[1],"Media"=variaveisHoras[2],"Moda"= variaveisHoras[3],"Variância"=variaveisHoras[4],"Desvio padrão"=variaveisHoras[5],"Coeficiente de variância"=variaveisHoras[6],"Coeficiente de simetria"=variaveisHoras[7])
+tabelaCMVar <- data.frame("Horas"="-","Mediana"=variaveiCM[1],"Media"=variaveiCM[2],"Moda"= variaveiCM[3],"Variância"=variaveiCM[4],"Desvio padrão"=variaveiCM[5],"Coeficiente de variância"=variaveiCM[6],"Coeficiente de simetria"=variaveiCM[7])
 write.csv(tabelaIdadeVar,'tabelaIdadeVar.csv')
 write.csv(tabelaHoraVar,'tabelaHoraVar.csv')
+write.csv(tabelaCMVar,'tabelaCMVar.csv')
 
 #Media dos que estudam e s/n trabalham
 trabalhasim1 <- BD_Alunos[BD_Alunos$Trabalha=="Sim",]
