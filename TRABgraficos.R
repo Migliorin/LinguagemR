@@ -141,3 +141,16 @@ tabelaIdadeVar <- data.frame("Idade"="-","Mediana"=variaveisIdade[1],"Media"=var
 tabelaHoraVar <- data.frame("Horas"="-","Mediana"=variaveisHoras[1],"Media"=variaveisHoras[2],"Moda"= variaveisHoras[3],"Variância"=variaveisHoras[4],"Desvio padrão"=variaveisHoras[5],"Coeficiente de variância"=variaveisHoras[6],"Coeficiente de simetria"=variaveisHoras[7])
 write.csv(tabelaIdadeVar,'tabelaIdadeVar.csv')
 write.csv(tabelaHoraVar,'tabelaHoraVar.csv')
+
+#Media dos que estudam e s/n trabalham
+trabalhasim1 <- BD_Alunos[BD_Alunos$Trabalha=="Sim",]
+trabalhanao1 <- BD_Alunos[BD_Alunos$Trabalha=="Não",]
+summary(as.numeric(trabalhasim1$Horas_EstudoSemana))[4]
+summary(as.numeric(trabalhanao1$Horas_EstudoSemana))[4]
+summary(as.numeric(BD_Alunos$Horas_EstudoSemana))[4]
+
+
+#Coeficiente de Variacao da idade, horas,
+(sd(BD_Alunos$Idade)/mean(BD_Alunos$Idade))*100 #CV da idade
+(sd(BD_Alunos$Horas_EstudoSemana)/summary(as.numeric(BD_Alunos$Horas_EstudoSemana))[4])*100 #CV da horas de estudo
+(sd(BD_Alunos$Conhecimento_Matematica)/summary(as.numeric(BD_Alunos$Conhecimento_Matematica))[4])*100 #CV de matematica
