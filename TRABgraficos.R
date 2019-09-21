@@ -1,11 +1,12 @@
 #instalação e leitura dos pacotes
 install.packages("tidyverse")
 install.packages("descr")
+install.packages("readxl")
 library(descr)
 library(tidyverse)
+library(readxl)
 
 #leitura dos dados do excell
-library(readxl)
 BD_Alunos <- read_excel("BD_Alunos.xlsx")
 
 #declarando os vetores da amostra estratificada
@@ -96,5 +97,49 @@ intervalosM <- seq(from=min(as.numeric(vet$Conhecimento_Matematica)),to=max(as.n
 tabelaConhecimento <- data.frame(freq(cut(vet$Conhecimento_Matematica,breaks = 2,right = F)))
 hist(as.numeric(vet$Conhecimento_Matematica),main = "Gráfico  - Histrograma de conhecimento matemático", freq=T, breaks = 5 ,xlab = "Nível de conhecimento", col = "grey",ylab="fi")
 write.csv(tabelaConhecimento, "tabelaConhecimento.csv")
-#----
 
+
+#-Cálculo de média, Moda, Variancia, DP, CV, CS. Para horas de estudo.----
+mediana_Idade<- summary(vet$Idade)[3]
+
+media_Idade <- summary(vet$Idade)[4]
+
+Moda_Idade <- names(table(vet$Idade))[table(vet$Idade)==max(table(vet$Idade))]
+
+Variancia_Idade <- var(vet$Idade)
+
+DesvioPadrao_Idade <- sd(vet$Idade)
+
+Coeficientevar_Idade <- (sd(vet$Idade)/ (mean(vet$Idade))*100)
+
+percentis = seq(.01,.99,.01) #para achar os percentis
+
+Coeficiente_Simetria_Idade <- ((summary(vet$Idade)["3rd Qu."]) - summary(vet$Idade)["1st Qu."])/((2*((quantile(vet$Idade, percentis)["90%"])-(quantile(vet$Idade, percentis)["10%"]))))
+
+
+#-Cálculo de média, Moda, Variancia, DP, CV, CS. Para horas de estudo----
+Horas_EstudoSemana <- (as.numeric(vet$Horas_EstudoSemana))
+
+mediana_Horas_EstudoSemana <- summary(Horas_EstudoSemana)[3]
+
+media_Horas_EstudoSemana <- summary(Horas_EstudoSemana)[4]
+
+moda_horasEstudo_semana <- mean(as.numeric( names(table(Horas_EstudoSemana))[table(Horas_EstudoSemana)==max(table(Horas_EstudoSemana))]))
+
+Variancia_Horas_EstudoSemana <- var(Horas_EstudoSemana)
+
+DesvioPadrao_Horas_EstudoSemana <- sd(Horas_EstudoSemana)
+
+Coeficientevar_Horas_EstudoSemana <- (sd(Horas_EstudoSemana)/(media_Horas_EstudoSemana))*100
+
+Coeficiente_Simetria_horas_Estudo_semana <- ((summary(Horas_EstudoSemana)["3rd Qu."]) - summary(Horas_EstudoSemana)["1st Qu."])/((2*((quantile(Horas_EstudoSemana, percentis)["90%"])-(quantile(Horas_EstudoSemana, percentis)["10%"]))))
+
+
+#tabela de idade e horas estudos
+variaveisIdade <- as.numeric(c(mediana_Idade,media_Idade,Moda_Idade,Variancia_Idade,DesvioPadrao_Idade,Coeficientevar_Idade,Coeficiente_Simetria_Idade))
+variaveisHoras <- c(mediana_Horas_EstudoSemana,media_Horas_EstudoSemana,moda_horasEstudo_semana,Variancia_Horas_EstudoSemana,DesvioPadrao_Horas_EstudoSemana,Coeficientevar_Horas_EstudoSemana,Coeficiente_Simetria_horas_Estudo_semana)
+
+tabelaIdadeVar <- data.frame("Idade"="-","Mediana"=variaveisIdade[1],"Media"=variaveisIdade[2],"Moda"= variaveisIdade[3],"Variância"=variaveisIdade[4],"Desvio padrão"=variaveisIdade[5],"Coeficiente de variância"=variaveisIdade[6],"Coeficiente de simetria"=variaveisIdade[7])
+tabelaHoraVar <- data.frame("Horas"="-","Mediana"=variaveisHoras[1],"Media"=variaveisHoras[2],"Moda"= variaveisHoras[3],"Variância"=variaveisHoras[4],"Desvio padrão"=variaveisHoras[5],"Coeficiente de variância"=variaveisHoras[6],"Coeficiente de simetria"=variaveisHoras[7])
+write.csv(tabelaIdadeVar,'tabelaIdadeVar.csv')
+write.csv(tabelaHoraVar,'tabelaHoraVar.csv')
