@@ -99,7 +99,7 @@ hist(as.numeric(vet$Conhecimento_Matematica),main = "Gráfico  - Histrograma de 
 write.csv(tabelaConhecimento, "tabelaConhecimento.csv")
 
 
-#-Cálculo de média, Moda, Variancia, DP, CV, CS. Para horas de estudo.----
+#-Cálculo de média, Moda, Variancia, DP, CV, CS. Para IDADE----
 mediana_Idade<- summary(vet$Idade)[3]
 
 media_Idade <- summary(vet$Idade)[4]
@@ -112,10 +112,8 @@ DesvioPadrao_Idade <- sd(vet$Idade)
 
 Coeficientevar_Idade <- (sd(vet$Idade)/ (mean(vet$Idade))*100)
 
-percentis = seq(.01,.99,.01) #para achar os percentis
-
-Coeficiente_Simetria_Idade <- ((summary(vet$Idade)["3rd Qu."]) - summary(vet$Idade)["1st Qu."])/((2*((quantile(vet$Idade, percentis)["90%"])-(quantile(vet$Idade, percentis)["10%"]))))
-
+coeficiente_Simetria_Idade <- ((quantile(vet$Idade)[1]+quantile(vet$Idade)[3]-2*quantile(vet$Idade)[2]) / (quantile(vet$Idade)[3]-quantile(vet$Idade)[1]))
+                                                                                            #relação de taylor
 
 #-Cálculo de média, Moda, Variancia, DP, CV, CS. Para horas de estudo----
 Horas_EstudoSemana <- (as.numeric(vet$Horas_EstudoSemana))
@@ -124,16 +122,16 @@ mediana_Horas_EstudoSemana <- summary(Horas_EstudoSemana)[3]
 
 media_Horas_EstudoSemana <- summary(Horas_EstudoSemana)[4]
 
-moda_horasEstudo_semana <- mean(as.numeric( names(table(Horas_EstudoSemana))[table(Horas_EstudoSemana)==max(table(Horas_EstudoSemana))]))
-
+moda_horasEstudo_semana <- mean(as.numeric(  names(table(Horas_EstudoSemana))[table(Horas_EstudoSemana)==max(table(Horas_EstudoSemana))]))
+ 
 Variancia_Horas_EstudoSemana <- var(Horas_EstudoSemana)
-
+ 
 DesvioPadrao_Horas_EstudoSemana <- sd(Horas_EstudoSemana)
 
 Coeficientevar_Horas_EstudoSemana <- (sd(Horas_EstudoSemana)/(media_Horas_EstudoSemana))*100
 
-Coeficiente_Simetria_horas_Estudo_semana <- ((summary(Horas_EstudoSemana)["3rd Qu."]) - summary(Horas_EstudoSemana)["1st Qu."])/((2*((quantile(Horas_EstudoSemana, percentis)["90%"])-(quantile(Horas_EstudoSemana, percentis)["10%"]))))
-  
+Coeficiente_Simetria_horas_Estudo_semana <- ((quantile(Horas_EstudoSemana)[1]+quantile(Horas_EstudoSemana)[3]-2*quantile(Horas_EstudoSemana)[2]) / (quantile(Horas_EstudoSemana)[3] - quantile(Horas_EstudoSemana)[1]))
+                                                                                                  #pela relação de taylor
 
 #tabela de idade e horas estudos
 variaveisIdade <- as.numeric(c(mediana_Idade,media_Idade,Moda_Idade,Variancia_Idade,DesvioPadrao_Idade,Coeficientevar_Idade,Coeficiente_Simetria_Idade))
